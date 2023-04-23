@@ -12,7 +12,15 @@ export const useShoppingCartStore = defineStore('shoppingCart', {
   },
   actions: {
     addTicketToCart(ticket: any) {
-      console.log('ticket', ticket);
+      const existingTicket = this.shoppingCart.find(
+        (obj) => obj.ticket.id === ticket.id
+      );
+      if (existingTicket) {
+        existingTicket.quantity += 1;
+      } else {
+        const newTicket = { ticket: ticket, quantity: 1 };
+        this.shoppingCart.push(newTicket);
+      }
     },
   },
 });
