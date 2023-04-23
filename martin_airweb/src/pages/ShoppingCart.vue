@@ -1,5 +1,6 @@
 <template>
   <q-page class="">
+    <h3 class="text-center">MON PANIER</h3>
     <div style="width: 95%; margin: 0 auto">
       <q-card
         flat
