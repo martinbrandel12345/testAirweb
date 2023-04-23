@@ -6,8 +6,10 @@ export const useShoppingCartStore = defineStore('shoppingCart', {
   }),
   getters: {
     totalPrice: (state) => {
-      const totalprice = 12344;
-      return totalprice;
+      const noShoppingCart = 0;
+      return state.shoppingCart.reduce((total, currentTicket) => {
+        return total + currentTicket.ticket.price * currentTicket.quantity;
+      }, noShoppingCart);
     },
   },
   actions: {

@@ -29,7 +29,7 @@
         </q-card-section>
         <q-card-section class="row justify-between items-center">
           <p>TOTAL</p>
-          <p>155 €</p>
+          <p>{{ store.totalPrice / 100 }} €</p>
         </q-card-section>
         <q-card-actions align="right" class="q-mr-sm">
           <q-btn> ACCEDER AU PAIEMENT</q-btn>
