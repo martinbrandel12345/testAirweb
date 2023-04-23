@@ -71,6 +71,10 @@ export default defineComponent({
           const walletAmount = parseInt($q.cookies.get('wallet_amount'));
           const newWalletAmount = walletAmount + parseInt(amountDeposit);
           $q.cookies.set('wallet_amount', newWalletAmount.toString());
+          $q.notify({
+            type: 'positive',
+            message: `Le wallet a été crédité de ${newWalletAmount}`,
+          });
         }
       },
     };

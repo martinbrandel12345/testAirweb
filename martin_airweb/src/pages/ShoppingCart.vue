@@ -49,7 +49,7 @@
           <p>{{ store.totalPrice / 100 }} €</p>
         </q-card-section>
         <q-card-actions align="right" class="q-mr-sm">
-          <q-btn> ACCEDER AU PAIEMENT</q-btn>
+          <q-btn @click="methods.payment()"> ACCEDER AU PAIEMENT</q-btn>
         </q-card-actions>
       </q-card>
     </div>
@@ -57,14 +57,21 @@
 </template>
 
 <script lang="ts">
+import { useQuasar } from 'quasar';
 import TicketService from 'src/services/tickets';
 import { useShoppingCartStore } from 'src/stores/shopping-cart-store';
-import { defineComponent, onMounted } from 'vue';
+import { defineComponent, onMounted, reactive } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'ShoppingCart',
   setup() {
     const store = useShoppingCartStore();
+    const router = useRouter();
+    const $q = useQuasar();
+    const state = reactive({
+      amount: 0,
+    });
     onMounted(() => {
       console.log(store.shoppingCart);
     });
@@ -77,6 +84,29 @@ export default defineComponent({
       removeTicket: async (id: number) => {
         const ticket = await TicketService.getTicket(id);
         store.removeTicketToCart(ticket.data);
+      },
+      payment: () => {
+        const totalPrice = store.totalPrice / 100;
+        const hasWallet = $q.cookies.has('wallet_amount');
+        if (hasWallet) {
+          state.amount = parseInt($q.cookies.get('wallet_amount'));
+        }
+        if (totalPrice > state.amount) {
+          $q.notify({
+            type: 'negative',
+            message: `Montant sur votre wallet insuffisant`,
+          });
+          router.push({ name: 'profil' });
+        } else {
+          $q.notify({
+            type: 'positive',
+            message: `Commande effectué avec succès !`,
+          });
+          const newWalletAmount = state.amount - totalPrice;
+          $q.cookies.set('wallet_amount', newWalletAmount.toString());
+          store.refreshShoppingCart();
+          router.push({ name: 'tickets' });
+        }
       },
     };
 

@@ -38,5 +38,8 @@ export const useShoppingCartStore = defineStore('shoppingCart', {
         }
       }
     },
+    refreshShoppingCart() {
+      this.shoppingCart = [];
+    },
   },
 });
