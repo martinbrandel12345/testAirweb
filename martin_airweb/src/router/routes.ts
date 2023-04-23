@@ -6,9 +6,9 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
-        path: 'articles',
-        name: 'articles',
-        component: () => import('pages/ArticlesListPage.vue'),
+        path: '',
+        name: 'tickets',
+        component: () => import('pages/TicketsList.vue'),
       },
       {
         path: 'mon-panier',
