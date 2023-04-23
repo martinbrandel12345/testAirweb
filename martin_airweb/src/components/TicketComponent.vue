@@ -31,12 +31,14 @@
       name="shopping_cart"
       class="q-mb-sm"
       style="cursor: pointer"
+      @click="store.addTicketToCart(props.ticket)"
     />
   </q-card-section>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
+import { useShoppingCartStore } from 'src/stores/shopping-cart-store';
 
 export default defineComponent({
   name: 'TicketComponent',
@@ -48,9 +50,10 @@ export default defineComponent({
 
   components: {},
   setup(props) {
+    const store = useShoppingCartStore();
     const state = reactive({});
     const methods = {};
-    return { state, props, methods };
+    return { state, props, methods, store };
   },
 });
 </script>

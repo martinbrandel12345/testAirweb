@@ -11,6 +11,8 @@ export const useShoppingCartStore = defineStore('shoppingCart', {
     },
   },
   actions: {
-    addTicketToCart(ticket: any) {},
+    addTicketToCart(ticket: any) {
+      console.log('ticket', ticket);
+    },
   },
 });
