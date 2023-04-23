@@ -8,7 +8,13 @@
       >
         <q-card-section class="row items-center q-ml-md">
           <q-icon size="25px" name="shopping_cart"></q-icon>
-          <h6 class="q-ma-none q-pl-md">Votre panier</h6>
+
+          <h6 v-if="store.shoppingCart.length > 0" class="q-ma-none q-pl-md">
+            Votre panier
+          </h6>
+          <div v-else class="row">
+            <h6 class="q-ma-none q-pl-md">Votre panier est vide</h6>
+          </div>
         </q-card-section>
 
         <q-card-section
@@ -21,7 +27,17 @@
           </div>
 
           <div class="row justify-between items-center">
-            {{ ticket.quantity }}
+            <q-icon
+              size="20px"
+              name="remove"
+              @click="methods.removeTicket(ticket.ticket.id)"
+            ></q-icon>
+            <p class="q-my-none q-mx-sm">{{ ticket.quantity }}</p>
+            <q-icon
+              size="20px"
+              name="add"
+              @click="methods.addTicket(ticket.ticket.id)"
+            ></q-icon>
           </div>
           <div>
             <p>{{ ticket.ticket.price / 100 }} €</p>
@@ -40,8 +56,9 @@
 </template>
 
 <script lang="ts">
+import TicketService from 'src/services/tickets';
 import { useShoppingCartStore } from 'src/stores/shopping-cart-store';
-import { defineComponent, onMounted, reactive } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 
 export default defineComponent({
   name: 'ShoppingCart',
@@ -51,7 +68,18 @@ export default defineComponent({
       console.log(store.shoppingCart);
     });
 
-    return { store };
+    const methods = {
+      addTicket: async (id: number) => {
+        const ticket = await TicketService.getTicket(id);
+        store.addTicketToCart(ticket.data);
+      },
+      removeTicket: async (id: number) => {
+        const ticket = await TicketService.getTicket(id);
+        store.removeTicketToCart(ticket.data);
+      },
+    };
+
+    return { store, methods };
   },
 });
 </script>

@@ -24,5 +24,19 @@ export const useShoppingCartStore = defineStore('shoppingCart', {
         this.shoppingCart.push(newTicket);
       }
     },
+    removeTicketToCart(ticket: any) {
+      const existingTicket = this.shoppingCart.find(
+        (obj) => obj.ticket.id === ticket.id
+      );
+      if (existingTicket) {
+        existingTicket.quantity -= 1;
+        if (existingTicket.quantity <= 0) {
+          this.shoppingCart.splice(
+            this.shoppingCart.indexOf(existingTicket),
+            1
+          );
+        }
+      }
+    },
   },
 });
