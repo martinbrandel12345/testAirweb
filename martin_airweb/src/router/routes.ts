@@ -4,7 +4,23 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    children: [
+      {
+        path: '',
+        name: 'tickets',
+        component: () => import('pages/TicketsList.vue'),
+      },
+      {
+        path: 'mon-panier',
+        name: 'shoppingCart',
+        component: () => import('pages/ShoppingCart.vue'),
+      },
+      {
+        path: 'profil',
+        name: 'profil',
+        component: () => import('pages/ProfilPage.vue'),
+      },
+    ],
   },
 
   // Always leave this as last one,

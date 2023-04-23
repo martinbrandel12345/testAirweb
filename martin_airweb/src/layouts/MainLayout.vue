@@ -1,116 +1,87 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
-
     <q-page-container>
       <router-view />
     </q-page-container>
+    <q-footer
+      style="height: 75px"
+      class="bg-white column justify-end custom-footer"
+    >
+      <q-toolbar class="justify-center q-pa-none">
+        <div class="row">
+          <q-list
+            class="row items-center justify-between sub-title text-grey q-my-md"
+          >
+            <q-item
+              class="column custom-item q-pa-none"
+              :to="{ name: 'tickets' }"
+              :active="state.link === 'ticket'"
+              @click="state.link = 'ticket'"
+              clickable
+            >
+              <q-item-section class="items-center q-pa-none" avatar>
+                <q-icon name="local_activity" />
+              </q-item-section>
+              <q-item-section class="items-center none">Tickets</q-item-section>
+            </q-item>
+
+            <q-item
+              class="column custom-item q-pa-none"
+              :to="{ name: 'shoppingCart' }"
+              :active="state.link === 'shopping_cart'"
+              @click="state.link = 'shopping_cart'"
+              clickable
+            >
+              <q-item-section class="items-center q-pa-none" avatar>
+                <q-icon name="shopping_cart" />
+              </q-item-section>
+              <q-item-section class="items-center none"
+                >Mon panier</q-item-section
+              >
+            </q-item>
+
+            <q-item
+              class="column custom-item q-pa-none"
+              :to="{ name: 'profil' }"
+              :active="state.link === 'account'"
+              @click="state.link = 'account'"
+              clickable
+            >
+              <q-item-section class="items-center q-pa-none" avatar>
+                <q-icon name="account_circle" />
+              </q-item-section>
+              <q-item-section class="items-center none">Profil</q-item-section>
+            </q-item>
+          </q-list>
+        </div>
+      </q-toolbar>
+    </q-footer>
   </q-layout>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import EssentialLink from 'components/EssentialLink.vue';
-
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-];
+import { defineComponent, reactive } from 'vue';
 
 export default defineComponent({
   name: 'MainLayout',
 
-  components: {
-    EssentialLink
+  components: {},
+
+  setup() {
+    const state = reactive({
+      link: 'ticket',
+    });
+    const methods = {};
+    return { methods, state };
   },
-
-  setup () {
-    const leftDrawerOpen = ref(false)
-
-    return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
-    }
-  }
 });
 </script>
+
+<style>
+.custom-item {
+  width: 115px;
+}
+.custom-footer {
+  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.05);
+}
+</style>
