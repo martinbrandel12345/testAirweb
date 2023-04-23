@@ -1,6 +1,8 @@
 <template>
   <q-page class="">
-    <div><q-card> TICVKETS </q-card></div>
+    <div>
+      <q-card v-for="product in state.productList" :key="product"> </q-card>
+    </div>
   </q-page>
 </template>
 
