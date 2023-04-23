@@ -1,5 +1,18 @@
 <template>
   <q-layout view="lHh Lpr lFf">
+    <q-header>
+      <q-toolbar class="row justify-between">
+        <div>
+          <q-chip>
+            <q-avatar color="red" text-color="white">
+              {{ store.shoppingCart.length }}</q-avatar
+            >
+            <q-icon name="shopping_cart" />
+          </q-chip>
+        </div>
+        <div><q-icon size="20px" name="money" /> {{ state.amount }} €</div>
+      </q-toolbar>
+    </q-header>
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -60,7 +73,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { useQuasar } from 'quasar';
+import { useShoppingCartStore } from 'src/stores/shopping-cart-store';
+import { defineComponent, onMounted, reactive } from 'vue';
 
 export default defineComponent({
   name: 'MainLayout',
@@ -68,11 +83,20 @@ export default defineComponent({
   components: {},
 
   setup() {
+    const store = useShoppingCartStore();
+    const $q = useQuasar();
     const state = reactive({
       link: 'ticket',
+      amount: 0,
+    });
+    onMounted(() => {
+      const hasWallet = $q.cookies.has('wallet_amount');
+      if (hasWallet) {
+        state.amount = $q.cookies.get('wallet_amount');
+      }
     });
     const methods = {};
-    return { methods, state };
+    return { methods, state, store };
   },
 });
 </script>
