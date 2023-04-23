@@ -1,5 +1,5 @@
 <template>
-  <q-card-section class="items-center" horizontal>
+  <q-card-section class="items-center q-px-sm" horizontal>
     <q-img
       width="50px"
       height="50px"
@@ -20,8 +20,18 @@
     </p>
   </q-card-section>
   <q-card-section horizontal class="column justify-between items-center">
-    <p>{{ props.ticket.price / 100 }} €</p>
-    <q-icon name="shopping_cart" />
+    <div
+      style="height: 40px; width: 40px"
+      class="row justify-center items-center bg-primary"
+    >
+      <p class="q-ma-none">{{ props.ticket.price / 100 }} €</p>
+    </div>
+    <q-icon
+      size="25px"
+      name="shopping_cart"
+      class="q-mb-sm"
+      style="cursor: pointer"
+    />
   </q-card-section>
 </template>
 

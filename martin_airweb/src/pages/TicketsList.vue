@@ -2,8 +2,8 @@
   <q-page class="">
     <div style="width: 95%; margin: 0 auto">
       <q-card
-        class="row justify-between q-pa-md"
-        style="max-width: 500px; margin: 10px auto"
+        class="row justify-between"
+        style="max-width: 500px; height: 150px; margin: 10px auto"
         v-for="ticket in state.ticketList"
         :key="ticket"
       >
@@ -32,6 +32,7 @@ export default defineComponent({
       const response = await TicketService.getTickets();
       state.ticketList = response.data;
     });
+
     return { state };
   },
 });
