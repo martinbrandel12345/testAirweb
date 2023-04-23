@@ -1,9 +1,12 @@
 <template>
-  <q-page class=""> TICKET </q-page>
+  <q-page class="">
+    <div><q-card> TICVKETS </q-card></div>
+  </q-page>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import TicketService from 'src/services/tickets';
+import { defineComponent, onMounted, reactive } from 'vue';
 
 export default defineComponent({
   name: 'TicketsList',
@@ -11,7 +14,10 @@ export default defineComponent({
     const state = reactive({
       productList: [],
     });
-
+    onMounted(async () => {
+      const response = await TicketService.getTickets();
+      state.productList = response.data;
+    });
     return { state };
   },
 });
