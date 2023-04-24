@@ -1,8 +1,8 @@
 # Quasar App (martin-airweb)
 
-A Quasar Project
+Prérequis : Docker-compose
 
-## Commandes à suivre pou lancer le projet
+## Commandes à suivre pour lancer le projet
 
 ```bash
 git clone
