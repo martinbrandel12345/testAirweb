@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  quasar:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - '8078:8078'
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    command: 'quasar dev'
